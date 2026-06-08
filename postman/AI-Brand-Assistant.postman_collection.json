@@ -1,0 +1,186 @@
+{
+  "info": {
+    "name": "AI Brand Assistant API",
+    "description": "Postman collection for the AI Brand Assistant with multi-brand in-memory context",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "key": "brandId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Create Brand",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "    const json = pm.response.json();",
+              "    pm.collectionVariables.set('brandId', json.id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Fitness Brand\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/brands",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "brands"]
+        }
+      }
+    },
+    {
+      "name": "List All Brands",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "brands"]
+        }
+      }
+    },
+    {
+      "name": "Get Brand by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands/{{brandId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "brands", "{{brandId}}"]
+        }
+      }
+    },
+    {
+      "name": "Send Chat Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"brandId\": \"{{brandId}}\",\n  \"message\": \"I want a fitness brand for young professionals\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/chat",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "chat"]
+        }
+      }
+    },
+    {
+      "name": "Send Follow-up Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"brandId\": \"{{brandId}}\",\n  \"message\": \"Make it more premium\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/chat",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "chat"]
+        }
+      }
+    },
+    {
+      "name": "Create Brand - Validation Error",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/brands",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "brands"]
+        }
+      }
+    },
+    {
+      "name": "Get Brand - Invalid ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/brands/invalid-brand-id",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "brands", "invalid-brand-id"]
+        }
+      }
+    },
+    {
+      "name": "Chat - Empty Message",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"brandId\": \"{{brandId}}\",\n  \"message\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/chat",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "chat"]
+        }
+      }
+    }
+  ]
+}
