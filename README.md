@@ -282,6 +282,10 @@ Set the `baseUrl` variable to `http://localhost:5000`.
 | LLM | Groq API (llama-3.3-70b-versatile) |
 | Storage | In-memory JavaScript Map |
 
+## Loom Video
+
+[Video Link](https://www.loom.com/share/bf9fc98c9be8464597422d2b8ba778ad)
+
 ## License
 
 MIT
